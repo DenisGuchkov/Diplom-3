@@ -12,15 +12,16 @@ public class MainPageBurger {
     private final WebDriver driver;
     private final static String mainPage = "https://stellarburgers.nomoreparties.site/";
 
-    private final By
+    public final By
             authorizationButton = By.xpath(".//*[text() = 'Войти в аккаунт']"),
             personalAccountElement = By.xpath("html/body/div[1]/div/header/nav/a/p"),
             ingredientSauceLink = By.xpath("/html/body/div[1]/div/main/section[1]/div[1]/div[2]/span"),
-            checkSauceDisplayed = By.xpath("/html/body/div[1]/div/main/section[1]/div[2]/h2[2]"),
+
             ingredientStuffingLink = By.xpath("/html/body/div[1]/div/main/section[1]/div[1]/div[3]/span"),
-            checkStuffingDisplayed = By.xpath("/html/body/div[1]/div/main/section[1]/div[2]/h2[3]"),
+
             ingredientBunsLink = By.xpath("/html/body/div[1]/div/main/section[1]/div[1]/div[1]/span"),
-            checkBunsDisplayed = By.xpath("/html/body/div[1]/div/main/section[1]/div[2]/h2[1]"),
+            menu = By.xpath("//div[contains(@class,'tab_tab__1SPyG tab_tab_type_current__2BEPc')]"),
+
             orderButton = By.xpath(".//*[text() = 'Оформить заказ']");
 
     public MainPageBurger(WebDriver driver) {
@@ -58,50 +59,11 @@ public class MainPageBurger {
 
     // метод того что при нажатии ссылки соусов меню автоматически скролится до соусов
     @Step("Find And Click SauceLink on mainPage, check Sauce Element")
-    public boolean checkSauceLinkDisplayed() throws InterruptedException {
-        driver.findElement(ingredientSauceLink).click();
-        Thread.sleep(1000);
-        try {
-            JavascriptExecutor executor = (JavascriptExecutor) driver;
-            Long value = (long)
-                    executor.executeScript("return document.getElementsByClassName('BurgerIngredients_ingredients__menuContainer__Xu3Mo')[0].scrollTop;");
-            return value == 371;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+    public String getTextByCurrentIngredient(By ingredientLink) {
+        driver.findElement(ingredientLink).click();
+        var text = driver.findElement(menu).getText();
+        return text;
     }
-
-    // метод того что при нажатии ссылки соусов меню автоматически скролится до начинки
-    @Step("Find And Click StuffingLink on mainPage, check Stuffing Element")
-    public boolean checkStuffingLinkDisplayed() throws InterruptedException {
-        driver.findElement(ingredientStuffingLink).click();
-        Thread.sleep(1000);
-        try {
-            JavascriptExecutor executor = (JavascriptExecutor) driver;
-            Long value = (long)
-                    executor.executeScript("return document.getElementsByClassName('BurgerIngredients_ingredients__menuContainer__Xu3Mo')[0].scrollTop;");
-            return value == 960;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    // метод того что при нажатии ссылки соусов меню автоматически скролится до булок
-    @Step("Find And Click BunsLink on mainPage, check Buns Element")
-    public boolean checkBunsLinkDisplayed() throws InterruptedException {
-        driver.findElement(ingredientStuffingLink).click(); //(сначала отмотаем меню тк булки и так стартовые)
-        driver.findElement(ingredientBunsLink).click();
-        Thread.sleep(1000);
-        try {
-            JavascriptExecutor executor = (JavascriptExecutor) driver;
-            Long value = (long)
-                    executor.executeScript("return document.getElementsByClassName('BurgerIngredients_ingredients__menuContainer__Xu3Mo')[0].scrollTop;");
-            return value == 40;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
 
 }
 

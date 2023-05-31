@@ -9,7 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.assertEquals;
 
 public class CheckConstructorLinksTest {
 
@@ -22,7 +23,7 @@ WebDriver driver = new ChromeDriver();//когда нужно в Хроме те
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         MainPageBurger objMainPageBurger = new MainPageBurger(driver);
         objMainPageBurger.open();
-        assertTrue("Error in section Links-Sauce",  objMainPageBurger.checkSauceLinkDisplayed());
+        assertEquals("Соусы", objMainPageBurger.getTextByCurrentIngredient(objMainPageBurger.ingredientSauceLink));
     }
 
     @Test
@@ -31,7 +32,8 @@ WebDriver driver = new ChromeDriver();//когда нужно в Хроме те
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         MainPageBurger objMainPageBurger = new MainPageBurger(driver);
         objMainPageBurger.open();
-        assertTrue("Error in section Links-Buns",  objMainPageBurger.checkBunsLinkDisplayed());
+        driver.findElement(objMainPageBurger.ingredientStuffingLink).click(); //(сначала отмотаем меню тк булки и так стартовые)
+        assertEquals("Булки", objMainPageBurger.getTextByCurrentIngredient(objMainPageBurger.ingredientBunsLink));
     }
 
     @Test
@@ -40,7 +42,7 @@ WebDriver driver = new ChromeDriver();//когда нужно в Хроме те
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         MainPageBurger objMainPageBurger = new MainPageBurger(driver);
         objMainPageBurger.open();
-        assertTrue("Error in section Links-Stuffing",  objMainPageBurger.checkStuffingLinkDisplayed());
+        assertEquals("Начинки", objMainPageBurger.getTextByCurrentIngredient(objMainPageBurger.ingredientStuffingLink));
     }
 
   @After       // Закрыть браузер
