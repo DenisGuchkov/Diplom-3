@@ -1,10 +1,7 @@
 package objpages;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -61,10 +58,14 @@ public class MainPageBurger {
 
     // метод того что при нажатии ссылки соусов меню автоматически скролится до соусов
     @Step("Find And Click SauceLink on mainPage, check Sauce Element")
-    public boolean checkSauceLinkDisplayed() {
+    public boolean checkSauceLinkDisplayed() throws InterruptedException {
         driver.findElement(ingredientSauceLink).click();
+        Thread.sleep(1000);
         try {
-            return driver.findElement(checkSauceDisplayed).isDisplayed();
+            JavascriptExecutor executor = (JavascriptExecutor) driver;
+            Long value = (long)
+                    executor.executeScript("return document.getElementsByClassName('BurgerIngredients_ingredients__menuContainer__Xu3Mo')[0].scrollTop;");
+            return value == 371;
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -72,10 +73,14 @@ public class MainPageBurger {
 
     // метод того что при нажатии ссылки соусов меню автоматически скролится до начинки
     @Step("Find And Click StuffingLink on mainPage, check Stuffing Element")
-    public boolean checkStuffingLinkDisplayed() {
+    public boolean checkStuffingLinkDisplayed() throws InterruptedException {
         driver.findElement(ingredientStuffingLink).click();
+        Thread.sleep(1000);
         try {
-            return driver.findElement(checkStuffingDisplayed).isDisplayed();
+            JavascriptExecutor executor = (JavascriptExecutor) driver;
+            Long value = (long)
+                    executor.executeScript("return document.getElementsByClassName('BurgerIngredients_ingredients__menuContainer__Xu3Mo')[0].scrollTop;");
+            return value == 960;
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -83,11 +88,15 @@ public class MainPageBurger {
 
     // метод того что при нажатии ссылки соусов меню автоматически скролится до булок
     @Step("Find And Click BunsLink on mainPage, check Buns Element")
-    public boolean checkBunsLinkDisplayed() {
+    public boolean checkBunsLinkDisplayed() throws InterruptedException {
         driver.findElement(ingredientStuffingLink).click(); //(сначала отмотаем меню тк булки и так стартовые)
         driver.findElement(ingredientBunsLink).click();
+        Thread.sleep(1000);
         try {
-            return driver.findElement(checkBunsDisplayed).isDisplayed();
+            JavascriptExecutor executor = (JavascriptExecutor) driver;
+            Long value = (long)
+                    executor.executeScript("return document.getElementsByClassName('BurgerIngredients_ingredients__menuContainer__Xu3Mo')[0].scrollTop;");
+            return value == 40;
         } catch (NoSuchElementException e) {
             return false;
         }

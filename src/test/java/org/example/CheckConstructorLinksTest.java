@@ -13,12 +13,12 @@ import static org.junit.Assert.assertTrue;
 
 public class CheckConstructorLinksTest {
 
-//WebDriver driver = new ChromeDriver();//когда нужно в Хроме тестировать
-WebDriver driver = new ChromeDriver(YandexOptions.getYandexOptions());// когда нужно в Яндексе тестировать
+WebDriver driver = new ChromeDriver();//когда нужно в Хроме тестировать
+//WebDriver driver = new ChromeDriver(YandexOptions.getYandexOptions());// когда нужно в Яндексе тестировать
 
     @Test
     @DisplayName("check Constructor Sauce Link at MainPage")
-    public void checkSauceLink() {
+    public void checkSauceLink() throws InterruptedException {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         MainPageBurger objMainPageBurger = new MainPageBurger(driver);
         objMainPageBurger.open();
@@ -27,7 +27,7 @@ WebDriver driver = new ChromeDriver(YandexOptions.getYandexOptions());// ког�
 
     @Test
     @DisplayName("check Constructor Buns Link at MainPage")
-    public void checkBunsLink() {
+    public void checkBunsLink() throws InterruptedException {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         MainPageBurger objMainPageBurger = new MainPageBurger(driver);
         objMainPageBurger.open();
@@ -36,7 +36,7 @@ WebDriver driver = new ChromeDriver(YandexOptions.getYandexOptions());// ког�
 
     @Test
     @DisplayName("check Constructor Stuffing Link at MainPage")
-    public void checkStuffingLink() {
+    public void checkStuffingLink() throws InterruptedException {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         MainPageBurger objMainPageBurger = new MainPageBurger(driver);
         objMainPageBurger.open();
